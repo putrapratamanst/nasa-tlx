@@ -84,6 +84,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'main_login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -152,6 +153,8 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = 'main_login';
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');

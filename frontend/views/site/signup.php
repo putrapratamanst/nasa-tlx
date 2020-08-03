@@ -7,29 +7,29 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Signup';
+$this->title = 'Account Register';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <span class="login100-form-title p-b-32">
+        <?= Html::encode($this->title) ?>
+    </span>
 
-    <p>Please fill out the following fields to signup:</p>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <?php $form = ActiveForm::begin(['id' => 'form-signup', 'class' => 'login100-form validate-form flex-sb flex-w']); ?>
 
-                <?= $form->field($model, 'email') ?>
+    <?= $form->field($model, 'username')->textInput() ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'email') ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-                </div>
+    <?= $form->field($model, 'password')->passwordInput() ?>
 
-            <?php ActiveForm::end(); ?>
-        </div>
+    <div class="form-group">
+        <?= Html::submitButton('Signup', ['class' => 'login100-form-btn pull-right', 'name' => 'signup-button']) ?>
+        <?= Html::a('Login', ['login'], ['class' => 'login100-form-btn pull-left']) ?>
+
     </div>
+
+    <?php ActiveForm::end(); ?>
 </div>
