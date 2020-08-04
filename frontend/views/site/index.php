@@ -2,52 +2,96 @@
 
 /* @var $this yii\web\View */
 
+use frontend\models\AktivitasToKriteria;
+
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <div class="jumbotron" style="padding: 0px;">
+        <h1><?= Yii::$app->user->identity->username ?></h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p class="lead">
+            <marquee>Selamat Datang di Aplikasi Penilaian Beban Kerja</marquee>
+        </p>
+        <hr>
     </div>
 
     <div class="body-content">
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        <div class="row" style="text-align: center;">
+            <?php
+            foreach ($listKriteria as $key => $value) { ?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <div class="col-lg-4">
+                    <h2><?= $value->nama_kriteria; ?></h2>
+                    <?php
+                    $aktivitasByKriteria = AktivitasToKriteria::detailAktivitasToKriteria($idJabatan, $value['id']);
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+                    if (!$aktivitasByKriteria) { ?>
+                        <p><a class="btn btn-default" href="/aktivitas-to-kriteria/create?idKriteria=<?= $value->id; ?>">Input Data <?= $value->nama_kriteria; ?></a></p>
+                    <?php } else { ?>
+                        <p><a class="btn btn-primary" href="/aktivitas-to-kriteria/update?idKriteria=<?= $value->id; ?>">Update Data <?= $value->nama_kriteria; ?></a></p>
+                    <?php }
+                    ?>
+                </div>
+            <?php } ?>
         </div>
+        <br>
+        <table>
+            <caption>FORM <?= strtoupper(Yii::$app->user->identity->username) ?></caption>
+
+            <thead>
+                <tr>
+                    <th>Aktivitas</th>
+                    <?php
+                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
+                        <th><?= $valuelistKriteria->nama_kriteria ?></th>
+
+                    <?php } ?>
+
+                </tr>
+            </thead>
+
+
+            <?php
+
+            foreach ($listAktivitasByJabatan as $keylistAktivitasByJabatan => $valuelistAktivitasByJabatan) { ?>
+                <tr>
+                    <td><?= $valuelistAktivitasByJabatan['aktivitas']['nama_aktivitas']; ?></td>
+                    <?php
+                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
+                        <td>
+                            <?php
+                            $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $valuelistKriteria['id'], $valuelistAktivitasByJabatan['id_aktivitas']);
+                            if ($detailKriteriaJabatan) { ?>
+
+                                <?= $detailKriteriaJabatan->value ?></td>
+                    <?php } ?>
+
+                <?php } ?>
+                </tr>
+            <?php } ?>
+        </table>
 
     </div>
 </div>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>

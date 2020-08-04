@@ -10,10 +10,13 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use frontend\models\AktivitasToJabatan;
+use frontend\models\AktivitasToKriteria;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\Kriteria;
 
 /**
  * Site controller
@@ -74,7 +77,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $listKriteria = Kriteria::listKriteria();
+        $idJabatan = Yii::$app->user->identity->jabatan; //pake ini, jangan pake user id. User tidak boleh bertambah karna ini hanya untuk kepala per bagian
+        $listAktivitasByJabatan = AktivitasToJabatan::find()->with('aktivitas')->where(['id_jabatan' => $idJabatan])->asArray()->all();
+
+        return $this->render('index', [
+            'listKriteria' => $listKriteria,
+            'idJabatan' => $idJabatan,
+            'listAktivitasByJabatan' => $listAktivitasByJabatan
+        ]);
     }
 
     /**
@@ -157,8 +168,8 @@ class SiteController extends Controller
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+            Yii::$app->session->setFlash('success', "Please login with Username: {$model->username} and Password: {$model->password}.");
+            return $this->redirect('login');
         }
 
         return $this->render('signup', [

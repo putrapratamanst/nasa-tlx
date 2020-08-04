@@ -73,6 +73,6 @@ class m200803_185739_create_aktivitas_to_jabatan_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%aktivitas}}');
+        $this->dropTable('{{%aktivitas_to_jabatan}}');
     }
 }

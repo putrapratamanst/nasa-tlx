@@ -1,8 +1,10 @@
 <?php
 
+use common\widgets\Alert;
 use yii\helpers\Html;
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,6 +23,12 @@ use yii\helpers\Html;
     <link rel="stylesheet" type="text/css" href="<?= Yii::getAlias('@web/templates/') ?>css/util.css">
     <link rel="stylesheet" type="text/css" href="<?= Yii::getAlias('@web/templates/') ?>css/main.css">
     <!--===============================================================================================-->
+    <style>
+        .fade {
+            opacity: 1;
+            transition: opacity .15s linear;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,6 +36,8 @@ use yii\helpers\Html;
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+                <?= Alert::widget() ?>
+
                 <?= $content; ?>
             </div>
         </div>

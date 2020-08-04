@@ -17,6 +17,7 @@ class m200803_185823_create_aktivitas_to_kriteria_table extends Migration
             'id_kriteria' => $this->integer(),
             'id_aktivitas' => $this->integer(),
             'id_jabatan' => $this->integer(),
+            'value' => $this->string(255),
         ]);
     }
 
