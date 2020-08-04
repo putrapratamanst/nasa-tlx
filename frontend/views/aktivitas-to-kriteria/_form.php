@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
     <?php if ($isUpdate == false) {  ?>
 
         <form action="create?idKriteria=<?= $idKriteria ?>" method="POST">
+
             <table>
                 <?php
                 foreach ($listAktivitasByJabatan as $key => $value) { ?>
@@ -33,11 +34,11 @@ use yii\widgets\ActiveForm;
                 <?php
                 foreach ($listAktivitasByJabatan as $key => $value) {
                     $valueForm = NULL;
-                    $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $idKriteria,$value['id']);
-                    if($detailKriteriaJabatan){
+                    $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $idKriteria, $value['id']);
+                    if ($detailKriteriaJabatan) {
                         $valueForm = $detailKriteriaJabatan->value;
                     }
-                    ?>
+                ?>
                     <tr>
                         <td><label for="fname"><?= $value['aktivitas']['nama_aktivitas']; ?></label></td>
                         <td><input type="number" id="fname" name="<?= $detailKriteriaJabatan['id']; ?>" value="<?= $valueForm; ?>" required></td>

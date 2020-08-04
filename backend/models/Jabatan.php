@@ -40,4 +40,11 @@ class Jabatan extends \yii\db\ActiveRecord
             'nama_jabatan' => 'Nama Jabatan',
         ];
     }
+
+    public function listJabatan(){
+        return self::find()->all();
+    }
+    public function detailJabatan($id){
+        return self::find()->where(['id' => $id])->one();
+    }
 }

@@ -1,4 +1,7 @@
 <?php
+
+use backend\models\Jabatan;
+
 $user = Yii::$app->user->identity;
 ?>
 <div class="col-md-3 left_col">
@@ -38,25 +41,15 @@ $user = Yii::$app->user->identity;
                         <li><a href="/site/logout"><i class="fa fa-gear"></i> LOGOUT </a></li> -->
                     <li><a><i class="fa fa-edit"></i> NASA-TLX <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="/kriteria">Data Kriteria</a></li>
-                            <li><a href="/biodata">Data Alternatif</a></li>
-                            <li><a href="/perbandingan-kriteria/banding-kriteria">Perbandingan Kriteria</a></li>
-                            <li><a href="/perbandingan-alternatif/banding-alternatif">Perbandingan Alternatif</a></li>
-                            <li><a href="/hasil/hasil-perhitungan">Hasil Perhitungan</a></li>
+                            <?php 
+                            $listJabatan = Jabatan::listJabatan();
+                            foreach ($listJabatan as $key => $value) { ?>
+                            <li><a href="/perhitungan-nasa-tlx/hasil?id=<?= $value->id?>"><?= $value->nama_jabatan?></a></li>
+                            <?php } ?>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
-
-        <!-- /sidebar menu -->
-
-        <!-- /menu footer buttons -->
-        <!-- <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="/site/logout">
-                <span class="fa fa-gear" aria-hidden="true"></span>
-            </a>
-        </div> -->
-        <!-- /menu footer buttons -->
     </div>
 </div>
