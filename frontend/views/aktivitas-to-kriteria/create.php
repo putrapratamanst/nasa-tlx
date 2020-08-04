@@ -15,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'listAktivitasByJabatan' => $listAktivitasByJabatan,
         'idKriteria' => $idKriteria,
+        'isUpdate' => false
+
     ]) ?>
 
 </div>

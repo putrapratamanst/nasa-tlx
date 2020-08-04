@@ -104,16 +104,26 @@ class AktivitasToKriteriaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($idKriteria)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $detailKriteria = Kriteria::detailKriteria($idKriteria);
+        $idJabatan = Yii::$app->user->identity->jabatan; //pake ini, jangan pake user id. User tidak boleh bertambah karna ini hanya untuk kepala per bagian
+        $listAktivitasByJabatan = AktivitasToJabatan::find()->with('aktivitas')->where(['id_jabatan' => $idJabatan])->asArray()->all();
+        $post = Yii::$app->request->post();
+        if ($post) {
+            foreach ($post as $key => $value) {
+                $detailAktivitasKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaById($key);
+                $detailAktivitasKriteriaJabatan->value = $value;
+                $detailAktivitasKriteriaJabatan->save();
+            }
+            return $this->redirect('/site/index');
         }
-
+        
         return $this->render('update', [
-            'model' => $model,
+            'listAktivitasByJabatan' => $listAktivitasByJabatan,
+            'idKriteria' => $idKriteria,
+            'idJabatan' => $idJabatan,
+            'namaKriteria' => $detailKriteria->nama_kriteria,
         ]);
     }
 
