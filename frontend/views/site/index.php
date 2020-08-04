@@ -4,6 +4,8 @@
 
 use frontend\models\AktivitasToKriteria;
 
+$listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJabatan);
+
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -23,7 +25,7 @@ $this->title = 'My Yii Application';
             <?php
             foreach ($listKriteria as $key => $value) { ?>
 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <h2><?= $value->nama_kriteria; ?></h2>
                     <?php
                     $aktivitasByKriteria = AktivitasToKriteria::detailAktivitasToKriteria($idJabatan, $value['id']);
@@ -38,41 +40,59 @@ $this->title = 'My Yii Application';
             <?php } ?>
         </div>
         <br>
-        <table>
-            <caption>FORM <?= strtoupper(Yii::$app->user->identity->username) ?></caption>
 
-            <thead>
-                <tr>
-                    <th>Aktivitas</th>
-                    <?php
-                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
-                        <th><?= $valuelistKriteria->nama_kriteria ?></th>
+        <?php if (count($listByJabatan) > 0) { ?>
+
+            <table>
+                <caption>FORM <?= strtoupper(Yii::$app->user->identity->username) ?></caption>
+
+                <thead>
+                    <tr>
+                        <th>Aktivitas</th>
+                        <?php
+                        foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
+                            <th><?= $valuelistKriteria->nama_kriteria ?></th>
+
+                        <?php } ?>
+                        <th>Beban Kerja</th>
+
+                    </tr>
+                </thead>
+
+
+                <?php
+                foreach ($listAktivitasByJabatan as $keylistAktivitasByJabatan => $valuelistAktivitasByJabatan) { ?>
+                    <tr>
+                        <td><?= $valuelistAktivitasByJabatan['aktivitas']['nama_aktivitas']; ?></td>
+                        <?php
+                        foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
+                            <td>
+                                <?php
+                                $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $valuelistKriteria['id'], $valuelistAktivitasByJabatan['id_aktivitas']);
+                                if ($detailKriteriaJabatan) { ?>
+
+                                    <?= $detailKriteriaJabatan->value ?>
+                            </td>
+                        <?php } ?>
 
                     <?php } ?>
+                    <td>
+                        <?php 
+                        $sum = 1;
+                        $hasilBebanKerja = AktivitasToKriteria::bebanKerjaByAktifitas($idJabatan, $valuelistAktivitasByJabatan['id_aktivitas']);
+                        foreach ($hasilBebanKerja as $keyhasilBebanKerja => $valuehasilBebanKerja) {
+                            $beban = (int)$valuehasilBebanKerja->value;
+                            $sum *= $beban;
+                        }
+                        echo $sum. " menit";
+                        ?>
 
-                </tr>
-            </thead>
-
-
-            <?php
-
-            foreach ($listAktivitasByJabatan as $keylistAktivitasByJabatan => $valuelistAktivitasByJabatan) { ?>
-                <tr>
-                    <td><?= $valuelistAktivitasByJabatan['aktivitas']['nama_aktivitas']; ?></td>
-                    <?php
-                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
-                        <td>
-                            <?php
-                            $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $valuelistKriteria['id'], $valuelistAktivitasByJabatan['id_aktivitas']);
-                            if ($detailKriteriaJabatan) { ?>
-
-                                <?= $detailKriteriaJabatan->value ?></td>
-                    <?php } ?>
-
+                        
+                    </td>
+                    </tr>
                 <?php } ?>
-                </tr>
-            <?php } ?>
-        </table>
+            </table>
+        <?php } ?>
 
     </div>
 </div>

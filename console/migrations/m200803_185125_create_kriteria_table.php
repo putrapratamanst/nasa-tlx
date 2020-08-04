@@ -24,11 +24,6 @@ class m200803_185125_create_kriteria_table extends Migration
         $this->insert('kriteria', [
             'nama_kriteria' => "Volume Kerja",
         ]);
-
-        $this->insert('kriteria', [
-            'nama_kriteria' => "Beban Kerja",
-        ]);
-
     }
 
     /**

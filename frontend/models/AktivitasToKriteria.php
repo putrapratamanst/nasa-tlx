@@ -61,4 +61,14 @@ class AktivitasToKriteria extends \yii\db\ActiveRecord
         return AktivitasToKriteria::find()->where(['id' => $id])->one();
     }
 
+    public function detailAktivitasToKriteriaByJabatan($idJabatan)
+    {
+        return AktivitasToKriteria::find()->where(['id_jabatan' => $idJabatan])->all();
+    }
+    
+    public function bebanKerjaByAktifitas($idJabatan, $idAktivitas)
+    {
+        return AktivitasToKriteria::find()->where(['id_jabatan' => $idJabatan])->andWhere(['id_aktivitas' => $idAktivitas])->all();
+    }
+
 }
