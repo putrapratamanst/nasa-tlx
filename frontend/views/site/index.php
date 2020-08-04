@@ -61,6 +61,7 @@ $this->title = 'My Yii Application';
 
 
                 <?php
+                $totalBeban = 0;
                 foreach ($listAktivitasByJabatan as $keylistAktivitasByJabatan => $valuelistAktivitasByJabatan) { ?>
                     <tr>
                         <td><?= $valuelistAktivitasByJabatan['aktivitas']['nama_aktivitas']; ?></td>
@@ -77,20 +78,31 @@ $this->title = 'My Yii Application';
 
                     <?php } ?>
                     <td>
-                        <?php 
+                        <?php
                         $sum = 1;
                         $hasilBebanKerja = AktivitasToKriteria::bebanKerjaByAktifitas($idJabatan, $valuelistAktivitasByJabatan['id_aktivitas']);
                         foreach ($hasilBebanKerja as $keyhasilBebanKerja => $valuehasilBebanKerja) {
                             $beban = (int)$valuehasilBebanKerja->value;
                             $sum *= $beban;
                         }
-                        echo $sum. " menit";
+                        $totalBeban += $sum;
+                        echo $sum . " menit";
                         ?>
 
-                        
+
                     </td>
+
                     </tr>
                 <?php } ?>
+                <tr>
+                    <td>Total</td>
+                    <?php
+                    foreach ($listKriteria as $keylistKriterias => $valuelistKriterias) { ?>
+                        <td><?= AktivitasToKriteria::totalValue($idJabatan, $valuelistKriterias['id']) ?></td>
+                    <?php } ?>
+                    <td><?=$totalBeban?> menit</td>
+
+                </tr>
             </table>
         <?php } ?>
 

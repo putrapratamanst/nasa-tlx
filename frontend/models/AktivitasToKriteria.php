@@ -71,4 +71,9 @@ class AktivitasToKriteria extends \yii\db\ActiveRecord
         return AktivitasToKriteria::find()->where(['id_jabatan' => $idJabatan])->andWhere(['id_aktivitas' => $idAktivitas])->all();
     }
 
+    public function totalValue($idJabatan, $idKriteria)
+    {
+        return AktivitasToKriteria::find()->where(['id_jabatan' => $idJabatan])->andWhere(['id_kriteria' => $idKriteria])->sum('value');
+    }
+
 }
