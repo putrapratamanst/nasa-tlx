@@ -51,7 +51,7 @@ class m200804_172406_create_waktu_kerja_table extends Migration
         $this->insert('waktu_kerja', [
             'id_jabatan' => 1,
             'hari' => 5,
-            'waktu_masuk'=> "07:00",
+            'waktu_masuk'=> "08:00",
             'waktu_keluar'=> "17:00",
         ]);
 
