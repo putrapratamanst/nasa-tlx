@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
                 foreach ($listAktivitasByJabatan as $key => $value) { ?>
                     <tr>
                         <td><label for="fname"><?= $value['aktivitas']['nama_aktivitas']; ?></label></td>
-                        <td><input type="number" id="fname" name="<?= $value['id']; ?>" value="" required></td>
+                        <td><input type="number" id="fname" name="<?= $value['id_aktivitas']; ?>" value="" required></td>
                     </tr>
                 <?php } ?>
             </table><br>
