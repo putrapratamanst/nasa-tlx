@@ -10,13 +10,13 @@ use yii\web\Controller;
 
 class PerhitunganNasaTlxController extends Controller 
 {
-    public function actionHasil($id)
+    public function actionAnalisisBebanKerja($id)
     {
         $listAktivitasByJabatan = AktivitasToJabatan::find()->with('aktivitas')->where(['id_jabatan' => $id])->asArray()->all();
         $listKriteria = Kriteria::listKriteria();
 
         $detailJabatan = Jabatan::detailJabatan($id);
-        return $this->render('hasil', [
+        return $this->render('analisis-beban-kerja', [
             'namaJabatan' => $detailJabatan->nama_jabatan,
             'idJabatan' => $id,
             'listAktivitasByJabatan' => $listAktivitasByJabatan,

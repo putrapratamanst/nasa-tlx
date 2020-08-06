@@ -70,6 +70,7 @@ $this->title = 'My Yii Application';
                             <td>
                                 <?php
                                 $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $valuelistKriteria['id'], $valuelistAktivitasByJabatan['id_aktivitas']);
+
                                 if ($detailKriteriaJabatan) { ?>
 
                                     <?= $detailKriteriaJabatan->value ?>

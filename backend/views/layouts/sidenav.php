@@ -39,12 +39,21 @@ $user = Yii::$app->user->identity;
                         <li><a href="/delivery/create"><i class="fa fa-pencil"></i> INPUT KIRIMAN </a></li>
                         <li><a href="/delivery/export"><i class="fa fa-print"></i> LAPORAN </a></li>
                         <li><a href="/site/logout"><i class="fa fa-gear"></i> LOGOUT </a></li> -->
-                    <li><a><i class="fa fa-edit"></i> NASA-TLX <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-child"></i> Analisis Beban Kerja <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <?php 
+                            <?php
                             $listJabatan = Jabatan::listJabatan();
                             foreach ($listJabatan as $key => $value) { ?>
-                            <li><a href="/perhitungan-nasa-tlx/hasil?id=<?= $value->id?>"><?= $value->nama_jabatan?></a></li>
+                                <li><a href="/perhitungan-nasa-tlx/analisis-beban-kerja?id=<?= $value->id ?>"><?= $value->nama_jabatan ?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-edit"></i> NASA-TLX <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <?php
+                            $listJabatan = Jabatan::listJabatan();
+                            foreach ($listJabatan as $key => $value) { ?>
+                                <li><a href="/perhitungan-nasa-tlx/hasil?id=<?= $value->id ?>"><?= $value->nama_jabatan ?></a></li>
                             <?php } ?>
                         </ul>
                     </li>
