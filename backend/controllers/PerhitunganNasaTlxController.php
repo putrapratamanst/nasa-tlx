@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Jabatan;
+use backend\models\PerhitunganNasa;
 use frontend\models\AktivitasToJabatan;
 use frontend\models\Kriteria;
 use Yii;
@@ -21,6 +22,23 @@ class PerhitunganNasaTlxController extends Controller
             'idJabatan' => $id,
             'listAktivitasByJabatan' => $listAktivitasByJabatan,
             'listKriteria' => $listKriteria,
+
+        ]);
+    }    
+
+    public function actionHasil($id)
+    {
+        $perhitunganNasa = PerhitunganNasa::find()->where(['id_jabatan' => $id])->all();
+        $listAktivitasByJabatan = AktivitasToJabatan::find()->with('aktivitas')->where(['id_jabatan' => $id])->asArray()->all();
+        $listKriteria = Kriteria::listKriteria();
+
+        $detailJabatan = Jabatan::detailJabatan($id);
+        return $this->render('nasa_tlx', [
+            'namaJabatan' => $detailJabatan->nama_jabatan,
+            'idJabatan' => $id,
+            'listAktivitasByJabatan' => $listAktivitasByJabatan,
+            'listKriteria' => $listKriteria,
+            'perhitunganNasa' => $perhitunganNasa,
 
         ]);
     }    

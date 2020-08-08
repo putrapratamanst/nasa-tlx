@@ -12,7 +12,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel">
             <a class="panel-heading collapsed" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                <h4 class="panel-title">Analisis Beban Kerja: <?= $namaJabatan ?></h4>
+                <h4 class="panel-title">Beban Kerja: <?= $namaJabatan ?></h4>
             </a>
             <div id="collapseOne" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingOne" style="">
                 <div class="panel-body">
@@ -24,60 +24,14 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                             <thead>
                                 <tr>
                                     <th>Aktivitas</th>
-                                    <?php
-                                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
-                                        <th><?= $valuelistKriteria->nama_kriteria ?></th>
-
-                                    <?php } ?>
-                                    <th>Beban Kerja</th>
-
+                                    <th colspan="7">Beban Kerja</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                            <!-- munculkan kek yang d  excel -->
+                            </tbody>
 
 
-                            <?php
-                            $totalBeban = 0;
-                            foreach ($listAktivitasByJabatan as $keylistAktivitasByJabatan => $valuelistAktivitasByJabatan) { ?>
-                                <tr>
-                                    <td><?= $valuelistAktivitasByJabatan['aktivitas']['nama_aktivitas']; ?></td>
-                                    <?php
-                                    foreach ($listKriteria as $keylistKriteria => $valuelistKriteria) { ?>
-                                        <td>
-                                            <?php
-                                            $detailKriteriaJabatan = AktivitasToKriteria::detailAktivitasToKriteriaAndJabatan($idJabatan, $valuelistKriteria['id'], $valuelistAktivitasByJabatan['id_aktivitas']);
-                                            if ($detailKriteriaJabatan) { ?>
-
-                                                <?= $detailKriteriaJabatan->value ?>
-                                        </td>
-                                    <?php } ?>
-
-                                <?php } ?>
-                                <td>
-                                    <?php
-                                    $sum = 1;
-                                    $hasilBebanKerja = AktivitasToKriteria::bebanKerjaByAktifitas($idJabatan, $valuelistAktivitasByJabatan['id_aktivitas']);
-                                    foreach ($hasilBebanKerja as $keyhasilBebanKerja => $valuehasilBebanKerja) {
-                                        $beban = (int)$valuehasilBebanKerja->value;
-                                        $sum *= $beban;
-                                    }
-                                    $totalBeban += $sum;
-                                    echo $sum . " menit";
-                                    ?>
-
-
-                                </td>
-
-                                </tr>
-                            <?php } ?>
-                            <tr>
-                                <td>Total</td>
-                                <?php
-                                foreach ($listKriteria as $keylistKriterias => $valuelistKriterias) { ?>
-                                    <td><?= AktivitasToKriteria::totalValue($idJabatan, $valuelistKriterias['id']) ?></td>
-                                <?php } ?>
-                                <td><?= $totalBeban ?> menit</td>
-
-                            </tr>
                         </table>
                     <?php } ?>
                 </div>
@@ -100,51 +54,6 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $waktuKerja = WaktuKerja::waktuKerjaByJabatan($idJabatan);
-                            $hari = "";
-                            $totalInterval = 0;
-                            foreach ($waktuKerja as $keywaktuKerja => $valuewaktuKerja) {
-                                switch ($valuewaktuKerja['hari']) {
-                                    case 1:
-                                        $hari = "Senin";
-                                        break;
-                                    case 2:
-                                        $hari = "Selasa";
-                                        break;
-                                    case 3:
-                                        $hari = "Rabu";
-                                        break;
-                                    case 4:
-                                        $hari = "Kamis";
-                                        break;
-                                    case 5:
-                                        $hari = "Jumat";
-                                        break;
-                                    case 6:
-                                        $hari = "Sabtu";
-                                        break;
-
-                                    default:
-                                        # code...
-                                        break;
-                                }
-                            ?>
-                                <tr>
-                                    <td><?= $hari ?></td>
-                                    <td><?= $valuewaktuKerja['waktu_masuk'] ?></td>
-                                    <td><?= $valuewaktuKerja['waktu_keluar'] ?></td>
-                                    <td><?php
-                                        $a = new DateTime($valuewaktuKerja['waktu_masuk']);
-                                        $b = new DateTime($valuewaktuKerja['waktu_keluar']);
-                                        $interval = $a->diff($b);
-                                        $intervalResult = $interval->format("%H") - 1;
-                                        $totalInterval += $intervalResult;
-                                        echo  $intervalResult . " Jam";
-                                        ?></td>
-                                    <td> 1 Jam</td>
-                                </tr>
-                            <?php } ?>
 
                         </tbody>
                     </table>
@@ -162,7 +71,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Total Jam Kerja</th>
-                                <th><?= $totalInterval ?> Jam</th>
+                                <th> Jam</th>
                             </tr>
                         </thead>
                     </table>
@@ -170,10 +79,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Total Menit Kerja</th>
-                                <th><?php
-                                    $totalMenit = $totalInterval * 60;
-                                    echo $totalMenit;
-                                    ?> Menit</th>
+                                <th> Menit</th>
                             </tr>
                         </thead>
                     </table>
@@ -181,16 +87,13 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;" rowspan="10">Jam Kerja Efektif dengan Allowance 5%</th>
-                                <th><?= (95 / 100) * $totalInterval * 60 ?> Menit</th>
+                                <th>Menit</th>
                             </tr>
                             <tr>
-                                <th><?= ((95 / 100) * $totalInterval * 60) / 60 ?> Jam Seminggu</th>
+                                <th>Jam Seminggu</th>
                             </tr>
                             <tr>
-                                <th><?php
-                                    $jamPerHari =  (((95 / 100) * $totalInterval * 60) / 60) / 5;
-                                    echo $jamPerHari
-                                    ?> Jam Perhari</th>
+                                <th> Jam Perhari</th>
                             </tr>
                         </thead>
                     </table>
@@ -239,10 +142,10 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;" rowspan="2">Jam Kerja Efektif Per Tahun</th>
-                                <th><?= $jamPerHari * $totalMenit ?> Jam Per Tahun</th>
+                                <th>Jam Per Tahun</th>
                             </tr>
                             <tr>
-                                <th><?= ($jamPerHari * $totalMenit) / 60 ?> Menit Per Tahun</th>
+                                <th> Menit Per Tahun</th>
                             </tr>
                         </thead>
                     </table>
@@ -261,7 +164,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Jumlah Kebutuhan Karyawan</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan </th>
+                                <th>Karyawan </th>
                             </tr>
                         </thead>
                     </table>
@@ -269,10 +172,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Jumlah Karyawan Exsisting</th>
-                                <th><?php
-                                    $existingEmployee = TotalKaryawanToJabatan::find()->where(['id_jabatan' => $idJabatan])->one();
-                                    echo $existingEmployee ? $existingEmployee->total_karyawan : 0;
-                                    ?> Karyawan </th>
+                                <th> Karyawan </th>
                             </tr>
                         </thead>
                     </table>
@@ -280,7 +180,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Kurang Tambah</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan</th>
+                                <th>Karyawan</th>
                             </tr>
                         </thead>
                     </table>
@@ -288,7 +188,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Efektivitas Unit</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan </th>
+                                <th> Karyawan </th>
                             </tr>
                         </thead>
                     </table>

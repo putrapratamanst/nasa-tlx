@@ -39,6 +39,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Waktu Kerja', 'url' => ["waktu-kerja/create?id={$idJabatan}" ]],
+        ['label' => 'Total Karyawan', 'url' => ["total-karyawan-to-jabatan/create" ]],
         // ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
