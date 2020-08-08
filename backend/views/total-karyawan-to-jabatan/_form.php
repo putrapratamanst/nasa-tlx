@@ -8,8 +8,8 @@ use yii\widgets\ActiveForm;
     /* @var $this yii\web\View */
     /* @var $model backend\models\TotalKaryawanToJabatan */
     /* @var $form yii\widgets\ActiveForm */
-$jabatan = Jabatan::find()->all();
-    $listData = ArrayHelper::map($jabatan, 'id', 'nama_jabatan');
+$jabatan = Jabatan::find()->leftJoin('total_karyawan_to_jabatan', 'jabatan.id = total_karyawan_to_jabatan.id_jabatan')->where(['total_karyawan'=>NULL] )->all();
+$listData = ArrayHelper::map($jabatan, 'id', 'nama_jabatan');
 
 
 ?>
@@ -20,7 +20,7 @@ $jabatan = Jabatan::find()->all();
 
     <?= $form->field($model, 'id_jabatan')->dropDownList(
         $listData,
-        ['prompt' => 'Select Jbatan', 'disabled' => !$model->isNewRecord ?  'disabled' : false])
+        ['prompt' => 'Select Jabatan', 'disabled' => !$model->isNewRecord ?  'disabled' : false])
         
     ?>
 
