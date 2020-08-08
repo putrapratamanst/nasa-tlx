@@ -277,8 +277,10 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Jumlah Kebutuhan Karyawan</th>
-                                <th><?php echo
-                                $jamPerHari == 0 ? 0 : round($totalBeban / $jamPerTahun) ?> Karyawan </th>
+                                <th><?php 
+                                
+                                $jmlhKebutuhan = $jamPerHari == 0 ? 0 : $totalBeban / $jamPerTahun;
+                                echo $jmlhKebutuhan ?> Karyawan </th>
                             </tr>
                         </thead>
                     </table>
@@ -288,7 +290,8 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                                 <th style="width: 30%;">Jumlah Karyawan Exsisting</th>
                                 <th><?php
                                     $existingEmployee = TotalKaryawanToJabatan::find()->where(['id_jabatan' => $idJabatan])->one();
-                                    echo $existingEmployee ? $existingEmployee->total_karyawan : 0;
+                                    $jmlExisting=$existingEmployee ? $existingEmployee->total_karyawan : 0;
+                                    echo $jmlExisting;
                                     ?> Karyawan </th>
                             </tr>
                         </thead>
@@ -297,7 +300,25 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Kurang Tambah</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan</th>
+                                <th><?php
+                                $show = 0;
+                                if($jmlhKebutuhan != 0)
+                                {
+
+                                    $arrays = [];
+                                    $strs = strval($jmlhKebutuhan);
+
+                                    $arrs = explode(".", str_replace("'", "", $strs));
+
+                                    foreach ($arrs as $elem)
+                                        $arrays[] = trim($elem);
+
+                                    $show = $arrays[0] - $jmlExisting;
+                                }
+
+                                    echo $show;
+
+                                 ?> Karyawan</th>
                             </tr>
                         </thead>
                     </table>
