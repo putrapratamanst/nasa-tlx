@@ -188,7 +188,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                             </tr>
                             <tr>
                                 <th><?php
-                                    $jamPerHari =  ((95 / 100) * $totalInterval * 60) / 60;
+                                    $jamPerHari =  (((95 / 100) * $totalInterval * 60) / 60)/5;
                                     echo $jamPerHari
                                     ?> Jam Perhari</th>
                             </tr>
