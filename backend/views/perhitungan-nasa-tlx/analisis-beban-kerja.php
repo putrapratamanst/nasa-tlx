@@ -322,14 +322,6 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                             </tr>
                         </thead>
                     </table>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 30%;">Efektivitas Unit</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan </th>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
