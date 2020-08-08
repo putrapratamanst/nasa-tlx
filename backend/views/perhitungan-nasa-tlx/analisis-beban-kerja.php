@@ -277,7 +277,8 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;">Jumlah Kebutuhan Karyawan</th>
-                                <th><?= $jamPerHari == 0 ? 0 : round($totalBeban / (($jamPerHari * $totalMenit) / 60)) ?> Karyawan </th>
+                                <th><?php echo
+                                $jamPerHari == 0 ? 0 : round($totalBeban / $jamPerTahun) ?> Karyawan </th>
                             </tr>
                         </thead>
                     </table>
