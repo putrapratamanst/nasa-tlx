@@ -252,10 +252,13 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                         <thead>
                             <tr>
                                 <th style="width: 30%;" rowspan="2">Jam Kerja Efektif Per Tahun</th>
-                                <th><?= $jamPerHari * $totalMenit ?> Jam Per Tahun</th>
+                                <th><?php
+                                $jamPerTahun = $jamPerHari * 266;
+                                echo $jamPerTahun
+                                ?> Jam Per Tahun</th>
                             </tr>
                             <tr>
-                                <th><?= ($jamPerHari * $totalMenit) / 60 ?> Menit Per Tahun</th>
+                                <th><?= $jamPerTahun * 60 ?> Menit Per Tahun</th>
                             </tr>
                         </thead>
                     </table>
