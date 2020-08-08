@@ -138,7 +138,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                                         $a = new DateTime($valuewaktuKerja['waktu_masuk']);
                                         $b = new DateTime($valuewaktuKerja['waktu_keluar']);
                                         $interval = $a->diff($b);
-                                        $intervalResult = $interval->format("%H") - 1;
+                                        $intervalResult = $hari == "Sabtu" ? (int)$interval->format("%H")  :$interval->format("%H") - 1;
                                         $totalInterval += $intervalResult;
                                         echo  $intervalResult . " Jam";
                                         ?></td>
@@ -188,7 +188,7 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                             </tr>
                             <tr>
                                 <th><?php
-                                    $jamPerHari =  (((95 / 100) * $totalInterval * 60) / 60) / 5;
+                                    $jamPerHari =  ((95 / 100) * $totalInterval * 60) / 60;
                                     echo $jamPerHari
                                     ?> Jam Perhari</th>
                             </tr>
