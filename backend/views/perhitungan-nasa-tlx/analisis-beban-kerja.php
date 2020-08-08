@@ -192,6 +192,19 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
                                     echo $jamPerHari
                                     ?> Jam Perhari</th>
                             </tr>
+                            <tr>
+                                <th><?php
+                                    $array = [];
+                                    $str = strval($jamPerHari);
+
+                                    $arr = explode(".", str_replace("'", "", $str));
+
+                                    foreach ($arr as $elem)
+                                        $array[] = trim($elem);
+
+                                    echo $array[0]." Jam " .(($array[1] /100) *60)." Menit";
+                                    ?> </th>
+                            </tr>
                         </thead>
                     </table>
                     <table class="table table-bordered">
