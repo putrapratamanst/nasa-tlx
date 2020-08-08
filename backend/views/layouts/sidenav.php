@@ -35,6 +35,7 @@ $user = Yii::$app->user->identity;
                     <li><a href="/aktivitas"><i class="fa fa-list"></i> Data Aktivitas </a></li>
                     <li><a href="/jabatan"><i class="fa fa-pencil"></i> Data Jabatan </a></li>
                     <li><a href="/kriteria"><i class="fa fa-gear"></i> Data Kriteria </a></li>
+                    <li><a href="/total-karyawan-to-jabatan"><i class="fa fa-eye"></i> Data Total Karyawan </a></li>
                     <!-- 
                         <li><a href="/delivery/create"><i class="fa fa-pencil"></i> INPUT KIRIMAN </a></li>
                         <li><a href="/delivery/export"><i class="fa fa-print"></i> LAPORAN </a></li>
