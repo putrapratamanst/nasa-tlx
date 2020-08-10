@@ -9,6 +9,9 @@ use yii\widgets\ActiveForm;
     /* @var $model backend\models\TotalKaryawanToJabatan */
     /* @var $form yii\widgets\ActiveForm */
 $jabatan = Jabatan::find()->leftJoin('total_karyawan_to_jabatan', 'jabatan.id = total_karyawan_to_jabatan.id_jabatan')->where(['total_karyawan'=>NULL] )->all();
+if(count($jabatan) == 0){
+    $jabatan = Jabatan::find()->all();
+}
 $listData = ArrayHelper::map($jabatan, 'id', 'nama_jabatan');
 
 
