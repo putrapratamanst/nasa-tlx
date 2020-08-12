@@ -315,11 +315,10 @@ $listByJabatan = AktivitasToKriteria::detailAktivitasToKriteriaByJabatan($idJaba
 
                                     $show = $arrays[0] - $jmlExisting;
                                 }
-
-                                    if ($arrays[0] > $jmlExisting) {
-                                        echo "-" . $show;
-                                    } else {
+                                    if ($show > 0) {
                                         echo $show;
+                                    } else {
+                                        echo 0;
                                     }
 
                                  ?> Karyawan</th>
